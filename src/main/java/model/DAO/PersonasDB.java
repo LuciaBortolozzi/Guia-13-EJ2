@@ -1,7 +1,6 @@
 package model.DAO;
 
 import controller.Conexion;
-import controller.Controlador;
 import model.*;
 
 import java.sql.*;
@@ -10,6 +9,34 @@ import java.util.Calendar;
 import java.util.TreeSet;
 
 public class PersonasDB {
+
+    public static Personas selectPersona(int dni){
+        Personas persona = null;
+
+        try {
+            Connection conn = Conexion.getConnection();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Personas WHERE dni=" + dni);
+            TiposSangre tipoSangre = TiposSangreDB.buscarTipoSangre(rs.getInt("tipoSangre"));
+            Localidades localidad = LocalidadesDB.buscarLocalidad(rs.getInt("localidad"), rs.getInt("provincia"));
+
+            Calendar fechaNac = Calendar.getInstance();
+            fechaNac.setTime(rs.getDate("fechaNac"));
+
+            if (rs.getInt("tipoPersona") == 0) {
+                    persona = new Pacientes(rs.getString("nombre"), rs.getString("apellido"), rs.getInt("dni"),
+                            localidad, fechaNac, rs.getString("sexo").charAt(0), tipoSangre);
+                } else {
+                    persona = new Donadores(rs.getString("nombre"), rs.getString("apellido"), rs.getInt("dni"),
+                            localidad, fechaNac, rs.getString("sexo").charAt(0), tipoSangre);
+                }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return persona;
+    }
 
     public static TreeSet<Personas> selectPersonas(ArrayList<Provincias> provincias, ArrayList<Localidades> localidades, ArrayList<TiposSangre> tiposSangres) {
         TreeSet<Personas> personas = new TreeSet<Personas>();
@@ -20,18 +47,18 @@ public class PersonasDB {
 
             ResultSet rs = stmt.executeQuery("SELECT dni, nombre, apellido, sexo, fechaNac, provincia, localidad, tipoSangre, tipoPersona FROM Personas");
             while (rs.next()) {
-                Localidades localidad = Controlador.buscarLocalidad(provincias, rs.getInt("provincia"), localidades, rs.getInt("localidad"));
-                TiposSangre tipoSangre = Controlador.buscarTipoSangre(tiposSangres, rs.getInt("tipoSangre"));
+//                Localidades localidad = Controlador.buscarLocalidad(provincias, rs.getInt("provincia"), localidades, rs.getInt("localidad"));
+//                TiposSangre tipoSangre = Controlador.buscarTipoSangre(tiposSangres, rs.getInt("tipoSangre"));
                 Calendar fechaNac = Calendar.getInstance();
                 fechaNac.setTime(rs.getDate("fechaNac"));
 
-                if (rs.getInt("tipoPersona") == 0) {
+                /*if (rs.getInt("tipoPersona") == 0) {
                     personas.add(new Pacientes(rs.getString("nombre"), rs.getString("apellido"), rs.getInt("dni"),
                             localidad, fechaNac, rs.getString("sexo").charAt(0), tipoSangre));
                 } else {
                     personas.add(new Donadores(rs.getString("nombre"), rs.getString("apellido"), rs.getInt("dni"),
                             localidad, fechaNac, rs.getString("sexo").charAt(0), tipoSangre));
-                }
+                }*/
 
             }
             conn.close();

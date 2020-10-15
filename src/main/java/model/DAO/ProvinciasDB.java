@@ -11,6 +11,24 @@ import java.util.ArrayList;
 
 public class ProvinciasDB {
 
+    public static Provincias buscarProvincia(int idProvincia) {
+        Provincias provincia = null;
+
+        try {
+            Connection conn = Conexion.getConnection();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Provincias WHERE idProvincia = " + idProvincia);
+            provincia.setIdProvincia(rs.getInt("idProvincia"));
+            provincia.setNombreProv(rs.getString("nombreProv"));
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return provincia;
+    }
+
+
     public static ArrayList<Provincias> selectProvincias() {
         ArrayList<Provincias> provincias = new ArrayList<Provincias>();
 
