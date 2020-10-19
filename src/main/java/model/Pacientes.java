@@ -27,6 +27,13 @@ public class Pacientes extends Personas {
         this.inicioTratamiento = inicioTratamiento;
     }
 
+    public Pacientes(String nombre, String apellido, int dni, Localidades localidad, Calendar fechaNac, char sexo) {
+        super(nombre, apellido, dni, localidad, fechaNac, sexo);
+        this.enfermedad = enfermedad;
+        this.medicamentos = medicamentos;
+        this.inicioTratamiento = inicioTratamiento;
+    }
+
     public Calendar getInicioTratamiento() {
         return inicioTratamiento;
     }

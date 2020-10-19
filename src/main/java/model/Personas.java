@@ -24,6 +24,15 @@ public abstract class Personas implements Comparable<Personas>{
         this.tipoSangre = tipoSangre;
     }
 
+    public Personas(String nombre, String apellido, int dni, Localidades localidad, Calendar fechaNac, char sexo) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.dni = dni;
+        this.localidad = localidad;
+        this.fechaNac = fechaNac;
+        this.sexo = sexo;
+    }
+
     public String getNombre() {
         return nombre;
     }
