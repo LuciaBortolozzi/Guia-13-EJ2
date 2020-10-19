@@ -8,29 +8,32 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TreeSet;
 
+import static model.DAO.LocalidadesDB.buscarLocalidad;
+
 public class PersonasDB {
 
-    public static Personas selectPersona(int dni){
+    public static Personas selectPersona(int dnin){
         Personas persona = null;
 
         try {
             Connection conn = Conexion.getConnection();
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM Personas WHERE dni=" + dni);
-            TiposSangre tipoSangre = TiposSangreDB.buscarTipoSangre(rs.getInt("tipoSangre"));
-            Localidades localidad = LocalidadesDB.buscarLocalidad(rs.getInt("localidad"), rs.getInt("provincia"));
+            ResultSet rs = stmt.executeQuery("SELECT dni, nombre, apellido, sexo, fechaNac, provincia, localidad, tipoSangre, tipoPersona FROM Personas WHERE dni=" + dnin);
+            while (rs.next()) {
+                TiposSangre tipoSangre = TiposSangreDB.buscarTipoSangre(rs.getInt("tipoSangre"));
+                Localidades localidad = buscarLocalidad(rs.getInt("localidad"), rs.getInt("provincia"));
 
-            Calendar fechaNac = Calendar.getInstance();
-            fechaNac.setTime(rs.getDate("fechaNac"));
+                Calendar fechaNac = Calendar.getInstance();
+                fechaNac.setTime(rs.getDate("fechaNac"));
 
-            if (rs.getInt("tipoPersona") == 0) {
+                if (rs.getInt("tipoPersona") == 0) {
                     persona = new Pacientes(rs.getString("nombre"), rs.getString("apellido"), rs.getInt("dni"),
                             localidad, fechaNac, rs.getString("sexo").charAt(0), tipoSangre);
                 } else {
                     persona = new Donadores(rs.getString("nombre"), rs.getString("apellido"), rs.getInt("dni"),
                             localidad, fechaNac, rs.getString("sexo").charAt(0), tipoSangre);
                 }
-
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -67,6 +70,74 @@ public class PersonasDB {
             e.printStackTrace();
         }
         return personas;
+    }
+
+    public static TreeSet<Personas> selectPersonasPorProvTipoSangre(String provincia, String tiposSangre) {
+
+        TreeSet<Personas> personas = new TreeSet<Personas>();
+
+        try {
+            Connection conn = Conexion.getConnection();
+            Statement stmt = conn.createStatement();
+
+            String grupo=null;
+            String factor=null;
+            if(tiposSangre.length() == 11){
+                grupo = tiposSangre.substring(0,1);
+                factor = tiposSangre.substring(1,11);
+            }else{
+                grupo = tiposSangre.substring(0,2);
+                factor = tiposSangre.substring(2,12);
+            }
+
+            ResultSet rs = stmt.executeQuery("SELECT dni, nombre, apellido, sexo, fechaNac, provincia, localidad, tipoSangre, tipoPersona FROM " +
+                    "Personas p INNER JOIN Provincias po ON p.provincia = po.idProvincia " +
+                    "INNER JOIN TiposSangre t ON p.tipoSangre = t.id WHERE po.nombreProv = '" + provincia + "' AND t.grupo = '" + grupo + "' AND t.factor = '" + factor + "'");
+
+            while (rs.next()) {
+                 Localidades local = buscarLocalidad(rs.getInt("provincia"), rs.getInt("localidad"));
+
+                Calendar fechaNac = Calendar.getInstance();
+                fechaNac.setTime(rs.getDate("fechaNac"));
+
+                if (rs.getInt("tipoPersona") == 0) {
+                    personas.add(new Pacientes(rs.getString("nombre"), rs.getString("apellido"), rs.getInt("dni"),
+                            local, fechaNac, rs.getString("sexo").charAt(0)));
+                } else {
+                    personas.add(new Donadores(rs.getString("nombre"), rs.getString("apellido"), rs.getInt("dni"),
+                            local, fechaNac, rs.getString("sexo").charAt(0)));
+                }
+
+            }
+            conn.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return personas;
+    }
+
+    public static int selectLongitudTablaPersonas() {
+
+        int cantidadFilas = 0;
+
+        try {
+            Connection conn = Conexion.getConnection();
+            Statement stmt = conn.createStatement();
+
+            ResultSet rs = stmt.executeQuery("SELECT COUNT(*) AS rowcount FROM Personas");
+
+            while (rs.next()) {
+
+                cantidadFilas = rs.getInt("rowcount");
+
+            }
+            conn.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return cantidadFilas;
     }
 
     public static TreeSet<Personas> selectDonadores(TreeSet<Personas> personas) {

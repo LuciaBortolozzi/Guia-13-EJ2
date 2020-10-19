@@ -13,16 +13,18 @@ import java.util.ArrayList;
 public class TiposSangreDB {
 
     public static TiposSangre buscarTipoSangre(int tipSan) {
-        TiposSangre tipoSangre = null;
+        TiposSangre tipoSangre = new TiposSangre();
 
         try {
             Connection conn = Conexion.getConnection();
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM TiposSangre WHERE id = " + tipSan);
-            tipoSangre.setId(rs.getInt("id"));
-            tipoSangre.setGrupo(rs.getString("grupo"));
-            tipoSangre.setFactor(rs.getString("factor"));
-
+            ResultSet rs = stmt.executeQuery("SELECT id, grupo, factor FROM TiposSangre WHERE id =" + tipSan);
+            while (rs.next()) {
+                tipoSangre.setId(rs.getInt("id"));
+                tipoSangre.setGrupo(rs.getString("grupo"));
+                tipoSangre.setFactor(rs.getString("factor"));
+            }
+            conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -42,7 +44,7 @@ public class TiposSangreDB {
             while (rs.next()) {
                 tiposSangre.add(new TiposSangre(rs.getInt("id"), rs.getString("grupo"), rs.getString("factor")));
             }
-            stmt.close();
+            conn.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
