@@ -82,17 +82,40 @@ public class PersonasDB {
 
             String grupo=null;
             String factor=null;
-            if(tiposSangre.length() == 11){
-                grupo = tiposSangre.substring(0,1);
-                factor = tiposSangre.substring(1,11);
-            }else{
-                grupo = tiposSangre.substring(0,2);
-                factor = tiposSangre.substring(2,12);
+            if(tiposSangre != "") {
+                if (tiposSangre.length() == 11) {
+                    grupo = tiposSangre.substring(0, 1);
+                    factor = tiposSangre.substring(1, 11);
+                } else {
+                    grupo = tiposSangre.substring(0, 2);
+                    factor = tiposSangre.substring(2, 12);
+                }
             }
+            ResultSet rs;
 
-            ResultSet rs = stmt.executeQuery("SELECT dni, nombre, apellido, sexo, fechaNac, provincia, localidad, tipoSangre, tipoPersona FROM " +
-                    "Personas p INNER JOIN Provincias po ON p.provincia = po.idProvincia " +
-                    "INNER JOIN TiposSangre t ON p.tipoSangre = t.id WHERE po.nombreProv = '" + provincia + "' AND t.grupo = '" + grupo + "' AND t.factor = '" + factor + "'");
+            if(provincia == "" && tiposSangre != ""){
+
+                rs = stmt.executeQuery("SELECT dni, nombre, apellido, sexo, fechaNac, provincia, localidad, tipoSangre, tipoPersona FROM " +
+                        "Personas p INNER JOIN Provincias po ON p.provincia = po.idProvincia " +
+                        "INNER JOIN TiposSangre t ON p.tipoSangre = t.id WHERE t.grupo = '" + grupo + "' AND t.factor = '" + factor + "'");
+
+            } else if(provincia != "" && tiposSangre == ""){
+
+                rs = stmt.executeQuery("SELECT dni, nombre, apellido, sexo, fechaNac, provincia, localidad, tipoSangre, tipoPersona FROM " +
+                        "Personas p INNER JOIN Provincias po ON p.provincia = po.idProvincia " +
+                        "INNER JOIN TiposSangre t ON p.tipoSangre = t.id WHERE po.nombreProv = '" + provincia + "'");
+
+            } else if(provincia == "" && tiposSangre == ""){
+
+                rs = stmt.executeQuery("SELECT dni, nombre, apellido, sexo, fechaNac, provincia, localidad, tipoSangre, tipoPersona FROM " +
+                        "Personas p INNER JOIN Provincias po ON p.provincia = po.idProvincia " +
+                        "INNER JOIN TiposSangre t ON p.tipoSangre = t.id ");
+
+            }else {
+                rs = stmt.executeQuery("SELECT dni, nombre, apellido, sexo, fechaNac, provincia, localidad, tipoSangre, tipoPersona FROM " +
+                        "Personas p INNER JOIN Provincias po ON p.provincia = po.idProvincia " +
+                        "INNER JOIN TiposSangre t ON p.tipoSangre = t.id WHERE po.nombreProv = '" + provincia + "' AND t.grupo = '" + grupo + "' AND t.factor = '" + factor + "'");
+            }
 
             while (rs.next()) {
                  Localidades local = buscarLocalidad(rs.getInt("provincia"), rs.getInt("localidad"));
@@ -125,11 +148,11 @@ public class PersonasDB {
             Connection conn = Conexion.getConnection();
             Statement stmt = conn.createStatement();
 
-            ResultSet rs = stmt.executeQuery("SELECT COUNT(*) AS rowcount FROM Personas");
+            ResultSet rs = stmt.executeQuery("SELECT COUNT(*) AS row FROM Personas");
 
             while (rs.next()) {
 
-                cantidadFilas = rs.getInt("rowcount");
+                cantidadFilas = rs.getInt("row");
 
             }
             conn.close();
