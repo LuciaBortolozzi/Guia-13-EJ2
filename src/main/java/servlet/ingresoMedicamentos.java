@@ -1,19 +1,42 @@
 package servlet;
 
+import model.DAO.MedicamentosDB;
+import model.Medicamentos;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
-@WebServlet(name = "ingresoMedicamentos")
+@WebServlet(urlPatterns="/ingresoMedicamentos", name = "ingresoMedicamentos")
 public class ingresoMedicamentos extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int idMed = Integer.parseInt(request.getParameter("idMed"));
+        String nombreMed = request.getParameter("nombreMed");
+        String nombreLab = request.getParameter("nombreLab");
 
+        Medicamentos med = MedicamentosDB.selectMedicamento(idMed);
+        if (med == null){
+            Medicamentos medicamento = new Medicamentos(idMed, nombreMed, nombreLab);
+            MedicamentosDB.insertMedicamento(medicamento);
+
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/contactoIndex.jsp");
+            dispatcher.forward(request, response);
+        } else {
+            PrintWriter out = response.getWriter();
+
+            response.setContentType("text/html");
+            out.print("<html><body>");
+            out.print("<h2>Documento: " + idMed + " ya existe" +"</h2>");
+            out.print("</body></html>");
+        }
     }
 }
