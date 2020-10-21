@@ -8,9 +8,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Extracciones</title>
 </head>
 <body>
-
+<h1>Extracciones</h1>
+<ul>
+    <li><a href="AltaExtraccion.jsp">Alta Extracción</a></li>
+    <li><a href="BajaExtraccion.jsp">Eliminar Extracción</a></li>
+    <li><a href="ModificacionExtraccion.jsp">Modificar Extracción</a></li>
+</ul>
 </body>
 </html>

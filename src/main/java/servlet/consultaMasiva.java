@@ -1,6 +1,6 @@
 package servlet;
 
-import model.DAO.PersonasDB;
+import model.DAO.*;
 import model.Personas;
 
 import javax.servlet.ServletException;

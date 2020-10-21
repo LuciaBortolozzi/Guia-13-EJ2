@@ -11,7 +11,7 @@
     <title>Title</title>
 </head>
 <body>
-<form action="consultaMedicamento" method="post">
+<form action="consultaMedicamentos" method="post">
     <table>
         <tr>
             <td>ID Medicamento:</td>
