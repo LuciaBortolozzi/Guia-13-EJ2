@@ -12,6 +12,21 @@ import static model.DAO.LocalidadesDB.buscarLocalidad;
 
 public class PersonasDB {
 
+    protected String nombre;
+    protected String apellido;
+    protected int dni;
+    protected Localidades localidad;
+    protected Calendar fechaNac;
+    protected char sexo;
+    protected TiposSangre tipoSangre;
+
+    public PersonasDB(){}
+
+    public PersonasDB(int dni){
+
+        this.dni = dni;
+    }
+
     public static Personas selectPersona(int dnin){
         Personas persona = null;
 
@@ -132,22 +147,19 @@ public class PersonasDB {
         return cantidadFilas;
     }
 
-    public static TreeSet<Personas> selectDonadores(TreeSet<Personas> personas) {
+    public static ArrayList<String> selectDonadores() {
+
+        ArrayList<String> personasStr = new ArrayList<String>();
         try {
             Connection conn = Conexion.getConnection();
             Statement stmt = conn.createStatement();
 
-            ResultSet rs = stmt.executeQuery("SELECT dni, donaSangre, donaPlaquetas, donaPlasma FROM Donadores");
+            ResultSet rs = stmt.executeQuery("SELECT dni FROM Donadores");
             while (rs.next()) {
-                for (Personas per : personas
-                ) {
-                    if (per instanceof Donadores && rs.getInt("dni") == per.getDni()) {
-                        ((Donadores) per).setDonaSangre(rs.getBoolean("donaSangre"));
-                        ((Donadores) per).setDonaPlaquetas(rs.getBoolean("donaPlaquetas"));
-                        ((Donadores) per).setDonaPlasma(rs.getBoolean("donaPlasma"));
-
-                        selectDonadoresExtracciones(per);
-                    }
+                for (String per : personasStr)
+                {
+                    per = (String.valueOf(rs.getInt("dni")));
+                    personasStr.add(per);
                 }
             }
             conn.close();
@@ -155,7 +167,30 @@ public class PersonasDB {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return personas;
+        return personasStr;
+    }
+
+    public static ArrayList<String> selectExtracciones(int dni) {
+
+        ArrayList<String> extraccionesStr = new ArrayList<String>();
+        try {
+            Connection conn = Conexion.getConnection();
+            Statement stmt = conn.createStatement();
+
+            ResultSet rs = stmt.executeQuery("SELECT nroExtraccion FROM Extracciones WHERE dniDonador =" + dni);
+            while (rs.next()) {
+                for (String ext : extraccionesStr)
+                {
+                    ext = (String.valueOf(rs.getInt("nroExtraccion")));
+                    extraccionesStr.add(ext);
+                }
+            }
+            conn.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return extraccionesStr;
     }
 
     public static void selectDonadoresExtracciones(Personas persona) {

@@ -51,13 +51,16 @@ public class consultaExtracciones extends HttpServlet {
 
             } else {
 
-                out.print("Peso: " + extraccion.getPesoDonador() + "<br>");
-                out.print("Cantidad extraida: " + extraccion.getCantExtraida() + "<br>");
-                out.print("Presion: " + extraccion.getPresion() + "<br>");
-                out.print("Fecha Donación:" + extraccion.getFechaDonacion().get(Calendar.DAY_OF_MONTH) + "/" +
-                        (extraccion.getFechaDonacion().get(Calendar.MONTH)+1) + "/" +
-                        extraccion.getFechaDonacion().get(Calendar.YEAR) + "<br>");
-                out.print("Recuento glóbulos rojos: " + extraccion.getRecuentoGlobulosRojos() + "<br>");
+              String fechaDonacion = extraccion.getFechaDonacion().get(Calendar.DAY_OF_MONTH) + "/" +
+                      (extraccion.getFechaDonacion().get(Calendar.MONTH)+1) + "/" +
+                      extraccion.getFechaDonacion().get(Calendar.YEAR);
+                request.getSession().setAttribute("Peso", extraccion.getPesoDonador() );
+                request.getSession().setAttribute("CantidadExtraida", extraccion.getCantExtraida());
+                request.getSession().setAttribute("Presion", extraccion.getPresion());
+                request.getSession().setAttribute("FechaDonacion", fechaDonacion);
+                request.getSession().setAttribute("RecuentoGlobulosRojos", extraccion.getRecuentoGlobulosRojos());
+
+                request.getRequestDispatcher("actualizacionExtraccion.jsp").forward(request, response);
             }
         }
         out.print("</body></html>");

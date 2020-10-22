@@ -1,5 +1,6 @@
 package servlet;
 
+import controller.Controlador;
 import model.DAO.*;
 import model.Personas;
 
@@ -27,7 +28,8 @@ public class consultaPersonas extends HttpServlet {
         out.print("<h2>Documento: " + dni +"</h2>");
 
         if (dni != 0) {
-            Personas persona = PersonasDB.selectPersona(dni);
+            Controlador ctrl = new Controlador(dni);
+            Personas persona = ctrl.consultaPersona(dni);
             if (persona == null) {
                 out.print("<h2>Persona inexistente: " + dni + "</h2>");
             } else {
@@ -39,7 +41,6 @@ public class consultaPersonas extends HttpServlet {
                 out.print("Sexo: " + persona.getSexo() + "<br>");
                 out.print("Tipo de Sangre: " + persona.getTipoSangre().getGrupo() + persona.getTipoSangre().getFactor() + "<br>");
                 out.print("Localidad: " + persona.getLocalidad().getNombreLoc() + "<br>");
-                out.print("Provincia: " + persona.getLocalidad().getProvincia().getNombreProv() + "<br>");
             }
         }
         out.print("</body></html>");

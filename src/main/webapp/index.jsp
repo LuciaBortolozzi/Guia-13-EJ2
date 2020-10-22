@@ -17,7 +17,7 @@
     <li><a href="consultaMasiva.jsp">Consulta Masiva Personas</a></li>
     <li><a href="consultaEstadistica.jsp">Consulta Estadisticas</a></li>
     <li><a href="menuMedicamentos.jsp">ABM Medicamentos</a></li>
-    <li><a href="actualizacionExtracciones.jsp">ABM Extracciones</a></li>
+    <li><a href="menuExtracciones.jsp">ABM Extracciones</a></li>
 </ul>
 </body>
 </html>

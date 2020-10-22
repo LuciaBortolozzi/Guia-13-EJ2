@@ -14,7 +14,7 @@
 <h1>ABM de Medicamentos</h1>
 <ul>
     <li><a href="altaMedicamento.jsp">Alta de Medicamentos</a></li>
-    <li><a href="consultaMedicamento.jsp">Modificacion y baja de Medicamentos</a></li>
+    <li><a href="actualizacionMedicamento.jsp">Modificacion y baja de Medicamentos</a></li>
 </ul>
 </body>
 </html>
