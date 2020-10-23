@@ -24,15 +24,15 @@ public class consultaMedicamentosSRV extends HttpServlet {
 
             Medicamentos medicamento = Controlador.consultaMedicamento(idMed);
 
-            if (medicamento == null) {
+            if ( medicamento == null) {
 
                 out.print("<h2>ID Medicamento inexistente: " + idMed + "</h2>");
 
             } else {
-                out.print("<h2>ID Medicamento: " + idMed + "</h2>");
+                out.print("<h2>ID Medicamento: " + idMed +"</h2>");
 
-                request.getSession().setAttribute("nombreMed", medicamento.getNombreMed());
-                request.getSession().setAttribute("nombreLab", medicamento.getNombreLab());
+                request.getSession().setAttribute("nombreMed", medicamento.getNombreMed() );
+                request.getSession().setAttribute("nombreLab", medicamento.getNombreLab() );
 
                 request.getRequestDispatcher("actualizacionMedicamento.jsp").forward(request, response);
             }
@@ -41,6 +41,6 @@ public class consultaMedicamentosSRV extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        doPost(request,response);
     }
 }

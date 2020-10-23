@@ -14,11 +14,6 @@ import java.io.PrintWriter;
 @WebServlet("/modificarMedicamentosSRV")
 public class modificarMedicamentosSRV extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         int idMed = Integer.parseInt(request.getParameter("idMed"));
 
         if (idMed == 0) {
@@ -62,6 +57,10 @@ public class modificarMedicamentosSRV extends HttpServlet {
         request.getSession().setAttribute("idMed", "");
         request.getSession().setAttribute("nombreMed", "");
         request.getSession().setAttribute("nombreLab", "");
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doPost(request,response);
     }
 
 }
