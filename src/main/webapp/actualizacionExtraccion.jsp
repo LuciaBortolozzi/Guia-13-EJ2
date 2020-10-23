@@ -66,7 +66,7 @@ Origen datos: <%= request.getParameter("rdbOrigen") != null? request.getParamete
         <tr>
             <td>ID EXTRACCION:</td>
             <td>
-                <input type="text" name="idExtraccion" />
+                <input type="text" name="txtidExtraccion" />
             </td>
         </tr>
         <tr>
@@ -80,13 +80,11 @@ Origen datos: <%= request.getParameter("rdbOrigen") != null? request.getParamete
     double peso = 0;
     double cantidadExtraida = 0;
     String presion = null;
-    String FechaDonacion = null;
     double recuentoGlobulosRojos = 0;
     if (session.getAttribute("Presion")!=null){
      peso = Double.parseDouble((String) session.getAttribute("Peso"));
      cantidadExtraida = Double.parseDouble((String) session.getAttribute("CantidadExtraida"));
      presion = (String) session.getAttribute("Presion");
-     FechaDonacion = (String) session.getAttribute("FechaDonacion");
      recuentoGlobulosRojos = Double.parseDouble((String) session.getAttribute("RecuentoGlobulosRojos"));}
 %>
 <br><br>
@@ -100,9 +98,6 @@ Origen datos: <%= request.getParameter("rdbOrigen") != null? request.getParamete
         </tr>
         <tr><td> Presion </td>
             <td><input type="text" name="txtPresion" id="txtIdPresion" disabled value="<%=presion%>"  /> </td>
-        </tr>
-        <tr><td> Fecha Donacion </td>
-            <td><input type="text" name="txtFechaDonacion" id="txtIdFechaDonacion" disabled value="<%=FechaDonacion%>"  /> </td>
         </tr>
         <tr><td> Recuento Globulos Rojos </td>
             <td><input type="text" name="txtrecuentoGlobulosRojos" id="txtIdrecuentoGlobulosRojos" disabled value="<%=recuentoGlobulosRojos%>"  /> </td>
