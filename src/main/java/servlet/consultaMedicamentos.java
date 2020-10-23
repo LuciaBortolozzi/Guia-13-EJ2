@@ -15,7 +15,7 @@ import java.io.PrintWriter;
 public class consultaMedicamentos extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int idMed = Integer.parseInt(request.getParameter("txtIDMed"));
-
+      
         PrintWriter out = response.getWriter();
         response.setContentType("text/html");
         out.print("<html><body>");

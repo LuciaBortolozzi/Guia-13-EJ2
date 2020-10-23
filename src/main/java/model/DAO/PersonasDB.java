@@ -18,13 +18,19 @@ public class PersonasDB {
     protected Localidades localidad;
     protected Calendar fechaNac;
     protected char sexo;
-    protected TiposSangre tipoSangre;
+    protected String tipoSangre;
 
     public PersonasDB(){}
 
     public PersonasDB(int dni){
 
         this.dni = dni;
+    }
+
+    public PersonasDB(String nombre,String tipoSangre){
+
+        this.nombre = nombre;
+        this.tipoSangre = tipoSangre;
     }
 
     public static Personas selectPersona(int dnin){

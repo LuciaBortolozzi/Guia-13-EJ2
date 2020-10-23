@@ -1,6 +1,7 @@
 package servlet;
 
 import controller.Controlador;
+import model.Donadores;
 import model.Personas;
 
 import javax.servlet.ServletException;
@@ -24,6 +25,9 @@ public class modificarExtracciones extends HttpServlet {
         int dni = Integer.parseInt(request.getParameter("txtDNIDonador"));
         int idExt = Integer.parseInt(request.getParameter("txtidExtraccion"));
 
+        if (dni==0) 	{dni=Integer.parseInt(request.getSession().getAttribute("Dni").toString());}
+        if (idExt==0) 	{idExt=Integer.parseInt(request.getSession().getAttribute("NroExt").toString());}
+
         boolean borrar = (request.getParameterMap().containsKey("btnBorrar"))?true:false;
 
         response.setContentType("text/html");
@@ -45,18 +49,18 @@ public class modificarExtracciones extends HttpServlet {
             out.print("<h2>Datos Ingresados a Modificar</h2>");
             if (dni!=0 && idExt!=0)
             {
-                String anoPatentamiento=request.getParameter("txtPatentamiento");
-                String marca=request.getParameter("txtMarca");
-                String modelo=request.getParameter("txtModelo");
+                String pesoAux =request.getParameter("txtPeso");
+                String cantExtraidaAux =request.getParameter("txtCantidadExtraida");
+                String presionAux =request.getParameter("txtPresion");
+                String recuentoGlobRojosAux =request.getParameter("txtrecuentoGlobulosRojos");
 
-/*                out.print("Patente: " + patente+"<br>");*/
-                out.print("Año de Patentamiento: " + anoPatentamiento+"<br>");
-                out.print("Modelo: " + modelo+"<br>");
-                out.print("Marca: " + marca+"<br>");
+                out.print("Peso: " + peso +"<br>");
+                out.print("Cantidad extraida: " + cantExtraida + "<br>");
+                out.print("Persion: " + presion  + "<br>");
+                out.print("Recuento globulos rojos: " + recuentoGlobRojos + "<br>");
 
-/*                int anio=Integer.parseInt(anoPatentamiento);
-                VehiculosCtrl vc = new VehiculosCtrl(patente,anio , marca, modelo, origen);
-                vc.modificarVehiculo();*/
+                Controlador ctrl = new Controlador( dni,  idExt,  peso,  cantExtraida,  presion,  recuentoGlobRojos);
+                ctrl.updateExtracciones( dni,  idExt,  peso,  cantExtraida,  presion,  recuentoGlobRojos);
 
             }
             else
@@ -64,10 +68,13 @@ public class modificarExtracciones extends HttpServlet {
         }
         out.print("<h3><a href=\"index.jsp\">Volver</a></h3>");
         out.println("</html></body>");
-        request.getSession().setAttribute("Patente", "");
-        request.getSession().setAttribute("AñoPatentamiento","");
-        request.getSession().setAttribute("Marca", "");
-        request.getSession().setAttribute("Modelo", "");
+        request.getSession().setAttribute("Dni", "");
+        request.getSession().setAttribute("NroExt", "");
+        request.getSession().setAttribute("Peso", "");
+        request.getSession().setAttribute("CantidadExtraida", "");
+        request.getSession().setAttribute("Presion", "");
+        request.getSession().setAttribute("FechaDonacion", "");
+        request.getSession().setAttribute("RecuentoGlobulosRojos", "");
 
     }
 }

@@ -1,5 +1,6 @@
 package servlet;
 
+import controller.Controlador;
 import model.DAO.*;
 import model.Personas;
 
@@ -19,12 +20,6 @@ public class consultaMasiva extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        doGet(request, response);
-
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         String nombreProv = request.getParameter("nombreProv");
         String tipoSangre = request.getParameter("tipoSangre");
 
@@ -42,7 +37,8 @@ public class consultaMasiva extends HttpServlet {
 
 
         if (nombreProv != null) {
-            TreeSet<Personas> listaPersonas = PersonasDB.selectPersonasPorProvTipoSangre(nombreProv, tipoSangre);
+            Controlador ctrl = new Controlador(nombreProv, tipoSangre);
+            TreeSet<Personas> listaPersonas = ctrl.selectPersonasPorProvTipoSangre(nombreProv, tipoSangre);
 
             if (listaPersonas == null) {
 
@@ -74,9 +70,16 @@ public class consultaMasiva extends HttpServlet {
                 }
                 out.print("</table>");
             }
-            int tamanioTablaPersonas = PersonasDB.selectLongitudTablaPersonas();
+
+            int tamanioTablaPersonas = ctrl.selectLongitudTablaPersonas();
+
             out.print(listaPersonas.size() + " coincidencias en " + tamanioTablaPersonas + " personas <br>");
         }
         out.print("</body></html>");
+
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
     }
 }

@@ -3,10 +3,7 @@ package model.DAO;
 import controller.Conexion;
 import model.*;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Calendar;
 
 import static model.DAO.LocalidadesDB.buscarLocalidad;
@@ -15,6 +12,10 @@ public class ExtraccionesDB {
 
     private int nroExtraccion;
     private int dni;
+    private double peso;
+    private double cantExtraida;
+    private String presion;
+    private double recuentoGlobRojos;
 
     public ExtraccionesDB() {
     }
@@ -22,6 +23,24 @@ public class ExtraccionesDB {
     public ExtraccionesDB(int nroExtraccion, int dni) {
         this.nroExtraccion = nroExtraccion;
         this.dni =dni;
+    }
+
+    public ExtraccionesDB(int dni, int nroExtraccion, double peso, double cantExtraida, String presion, double recuentoGlobRojos) {
+        this.nroExtraccion = nroExtraccion;
+        this.dni =dni;
+        this.peso = peso;
+        this.cantExtraida=cantExtraida;
+        this.presion=presion;
+        this.recuentoGlobRojos=recuentoGlobRojos;
+    }
+
+    public ExtraccionesDB(int dni, double peso, String presion, double recuentoGlobRojos, double cantExtraida) {
+
+        this.dni =dni;
+        this.peso = peso;
+        this.cantExtraida=cantExtraida;
+        this.presion=presion;
+        this.recuentoGlobRojos=recuentoGlobRojos;
     }
 
     public static Personas selectExtraccion(int dni, int idExt){
@@ -69,41 +88,21 @@ public class ExtraccionesDB {
         return persona;
     }
 
-/*    public static void updateExtracciones(Personas persona) {
+    public static void updateExtracciones(int dni, int idExt, double peso, double cantExtraida, String presion, double recuentoGlobRojos) {
 
         try{
 
-            int tipoPersona;
-
-            if (persona instanceof Donadores) {
-                tipoPersona = 1;
-            } else {
-                tipoPersona = 0;
-            }
-
             Connection conn = Conexion.getConnection();
             Statement stmt = conn.createStatement();
-            stmt.executeUpdate("UPDATE Personas SET nombre='" + persona.getNombre() + "', apellido='" + persona.getApellido()
-                    + "', sexo='" + persona.getSexo() + "', fechaNac='" + persona.getFechaNac().get(Calendar.YEAR) + "-" + (persona.getFechaNac().get(Calendar.MONTH) + 1) + "-"
-                    + persona.getFechaNac().get(Calendar.DAY_OF_MONTH) + "', provincia=" + persona.getLocalidad().getProvincia().getIdProvincia() + ", localidad=" + persona.getLocalidad().getIdLocalidad() +
-                    ", tipoSangre=" + persona.getTipoSangre().getId() + " WHERE dni=" + persona.getDni() + "");
+            stmt.executeUpdate("UPDATE Extracciones SET pesoDonador=" + peso + ", cantExtraida=" + cantExtraida
+                    + ", presion='" + presion + "', ruentoGlobulosRojos=" + recuentoGlobRojos + " WHERE dniDonador=" + dni + " AND nroExtraccion = " + idExt);
 
             conn.close();
-
-            if (persona instanceof Donadores) {
-
-                updateDonadores(persona);
-
-            } else {
-
-                updatePacientes(persona);
-                updateMedicamentosPacientes(persona);
-            }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
     public static void deleteExtraccion(int dni, int idExt) {
 
@@ -113,6 +112,25 @@ public class ExtraccionesDB {
 
             stmt.executeUpdate("DELETE FROM Extracciones WHERE dniDonador=" + dni + " AND nroExtraccion=" + idExt);
             conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void insertExtracciones(int dni, double peso, String presion, double recuentoGlobRojos, double cantExtraida) {
+
+        try {
+
+            Connection conn = Conexion.getConnection();
+            CallableStatement stmt = conn.prepareCall("{call insertMedicamento(?, ?, ?, ?, ?)}");
+            stmt.setInt(1, dni);
+            stmt.setDouble(2, peso);
+            stmt.setString(3, presion);
+            stmt.setDouble(4, recuentoGlobRojos);
+            stmt.setDouble(5, cantExtraida);
+            stmt.execute();
+            conn.close();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

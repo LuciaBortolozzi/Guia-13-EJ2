@@ -37,13 +37,9 @@
 <%@page import="controller.*" %>
 <%@ page import="java.util.ArrayList" %>
 <h3>Consulta y Edicion de Extracciones</h3>
-<br><br>
-</form>
-Origen datos: <%= request.getParameter("rdbOrigen") != null? request.getParameter("rdbOrigen"): "" %>
 <br>
 <br>
-
-<form name="Consulta" action="consultaExtracciones" method="POST" >
+<form name="Consulta" action="consultaExtracciones" method="POST" onsubmit="document.Consulta.submit()" >
     <table>
         <tr>
             <td>DNI: </td>
@@ -81,11 +77,15 @@ Origen datos: <%= request.getParameter("rdbOrigen") != null? request.getParamete
     double cantidadExtraida = 0;
     String presion = null;
     double recuentoGlobulosRojos = 0;
+    int dni = 0;
+    int nroExt = 0;
     if (session.getAttribute("Presion")!=null){
      peso = Double.parseDouble((String) session.getAttribute("Peso"));
      cantidadExtraida = Double.parseDouble((String) session.getAttribute("CantidadExtraida"));
      presion = (String) session.getAttribute("Presion");
-     recuentoGlobulosRojos = Double.parseDouble((String) session.getAttribute("RecuentoGlobulosRojos"));}
+     recuentoGlobulosRojos = Double.parseDouble((String) session.getAttribute("RecuentoGlobulosRojos"));
+     dni = Integer.parseInt((String) session.getAttribute("Dni"));
+     nroExt = Integer.parseInt((String) session.getAttribute("NroExt"));}
 %>
 <br><br>
 <form name="Modifica" action="modificarExtracciones" >
