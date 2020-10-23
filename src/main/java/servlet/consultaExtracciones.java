@@ -22,12 +22,6 @@ public class consultaExtracciones extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        doGet(request, response);
-
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         int dni = Integer.parseInt(request.getParameter("txtDNIDonador"));
         int idExt = Integer.parseInt(request.getParameter("txtidExtraccion"));
 
@@ -36,15 +30,13 @@ public class consultaExtracciones extends HttpServlet {
         response.setContentType("text/html");
         out.print("<html><body>");
 
-        if(dni != 0 ){
-            out.print("<h2>DNI: " + dni +"</h2>");
-        }
-        if(idExt != 0){
-            out.print("<h2>ID extracción: " + idExt +"</h2>");
-        }
-
-
         if (dni != 0) {
+
+            out.print("<h2>DNI: " + dni +"</h2>");
+
+            if(idExt != 0){
+                out.print("<h2>ID extracción: " + idExt +"</h2>");
+            }
 
             Controlador ctrl = new Controlador(dni, idExt);
             Personas persona = ctrl.seleccionarExtracciones(dni, idExt);
@@ -59,9 +51,11 @@ public class consultaExtracciones extends HttpServlet {
 
             } else {
 
-              String fechaDonacion = ((Donadores)persona).getExtracciones().get(0).getFechaDonacion().get(Calendar.DAY_OF_MONTH) + "/" +
-                      (((Donadores)persona).getExtracciones().get(0).getFechaDonacion().get(Calendar.MONTH)+1) + "/" +
-                      ((Donadores)persona).getExtracciones().get(0).getFechaDonacion().get(Calendar.YEAR);
+                String fechaDonacion = ((Donadores)persona).getExtracciones().get(0).getFechaDonacion().get(Calendar.DAY_OF_MONTH) + "/" +
+                        (((Donadores)persona).getExtracciones().get(0).getFechaDonacion().get(Calendar.MONTH)+1) + "/" +
+                        ((Donadores)persona).getExtracciones().get(0).getFechaDonacion().get(Calendar.YEAR);
+                request.getSession().setAttribute("Dni", ((Donadores)persona).getDni() );
+                request.getSession().setAttribute("NroExt", ((Donadores)persona).getExtracciones().get(0).getNroExtraccion() );
                 request.getSession().setAttribute("Peso", ((Donadores)persona).getExtracciones().get(0).getPesoDonador() );
                 request.getSession().setAttribute("CantidadExtraida", ((Donadores)persona).getExtracciones().get(0).getCantExtraida());
                 request.getSession().setAttribute("Presion", ((Donadores)persona).getExtracciones().get(0).getPresion());
@@ -72,5 +66,10 @@ public class consultaExtracciones extends HttpServlet {
             }
         }
         out.print("</body></html>");
+
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
     }
 }

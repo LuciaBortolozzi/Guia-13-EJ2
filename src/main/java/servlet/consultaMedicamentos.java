@@ -21,6 +21,7 @@ public class consultaMedicamentos extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         int idMed = Integer.parseInt(request.getParameter("idMed"));
         PrintWriter out = response.getWriter();
 

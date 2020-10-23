@@ -6,6 +6,14 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<script>
+
+    function validaciones() {
+        var idPeso = document.getElementById("idPeso").value.trim();
+
+        if (isNaN(idPeso)){alert("Debe ingresar un peso");}
+    }
+</script>
 <html>
 <head>
     <title>Consultar estadisticas</title>
@@ -16,7 +24,7 @@
     <tr>
         <td>Ingrese un peso:</td>
         <td>
-            <input type="text" name="peso" />
+            <input type="text" id= "idPeso" name="peso" />
         </td>
     </tr>
     <input type="submit" value="Consultar"/>

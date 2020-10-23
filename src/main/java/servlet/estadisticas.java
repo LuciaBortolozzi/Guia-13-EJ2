@@ -1,5 +1,6 @@
 package servlet;
 
+import controller.Controlador;
 import model.Personas;
 import model.DAO.*;
 
@@ -31,7 +32,9 @@ public class estadisticas extends HttpServlet {
         response.setContentType("text/html");
         out.print("<html><body>");
 
-        TreeSet<Personas> listaPersonas = EstadisticasDB.selectEstadisticaUno();
+        Controlador ctrl = new Controlador();
+        TreeSet<Personas> listaPersonas = ctrl.selectEstadisticaUno();
+
         out.print("<h2> EN CABA </h2>");
         out.print("<table border=\"1\" cellpadding=\"2\"> <tr> <td> DNI </td>");
         out.print("<td> Nombre </td>");

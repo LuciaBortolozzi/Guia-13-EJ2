@@ -16,10 +16,7 @@ import java.util.Calendar;
 @WebServlet(urlPatterns="/consultaPersonas", name = "consultaPersonas")
 public class consultaPersonas extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doGet(request, response);
-    }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int dni = Integer.parseInt(request.getParameter("dni"));
         PrintWriter out = response.getWriter();
 
@@ -44,5 +41,9 @@ public class consultaPersonas extends HttpServlet {
             }
         }
         out.print("</body></html>");
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
     }
 }

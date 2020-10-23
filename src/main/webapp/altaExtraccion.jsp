@@ -50,15 +50,6 @@
                 <input type="text" name="cantExtraida" />
             </td>
         </tr>
-        <tr><td colspan=2 align=center>Pudo donar:</td></tr>
-        <tr>
-            <td>
-                SI<input name="pudoDonar" value="si" id="si" type="radio">
-            </td>
-            <td>
-                NO<input name="pudoDonar" value="no" id="no" type="radio">
-            </td>
-        </tr>
     </table>
     <input type="submit" name="btnIngresar" value="Ingresar"/>
     <input type="reset" value="Limpiar" />

@@ -13,7 +13,7 @@
 <body>
 <h1>Extracciones</h1>
 <ul>
-    <li><a href="AltaExtraccion.jsp">Alta Extracción</a></li>
+    <li><a href="altaExtraccion.jsp">Alta Extracción</a></li>
     <li><a href="actualizacionExtraccion.jsp">Modificar Extracción</a></li>
 </ul>
 </body>
