@@ -15,8 +15,8 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.TreeSet;
 
-@WebServlet(urlPatterns="/estadisticas", name = "estadisticas")
-public class estadisticas extends HttpServlet {
+@WebServlet("/estadisticasSRV")
+public class estadisticasSRV extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -52,7 +52,6 @@ public class estadisticas extends HttpServlet {
             out.print("<td>" + persona.getSexo() + "</td> </tr>");
         }
         out.print("</table>");
-
 
 
         out.print("</body></html>");

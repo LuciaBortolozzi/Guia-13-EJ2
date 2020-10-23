@@ -11,7 +11,7 @@
     <title>Consulta de Persona</title>
 </head>
 <body>
-<form action="consultaPersonas" method="post">
+<form action="consultaPersonasSRV" method="post">
     <table>
         <tr>
             <td>Documento:</td>

@@ -18,7 +18,7 @@
     </script>
 </head>
 <body>
-<form action="ingresoMedicamentos" onsubmit="validar()" method="post">
+<form action="ingresoMedicamentosSRV" onsubmit="validar()" method="post">
     <table>
         <tr>
             <td>ID Medicamento:</td>

@@ -3,11 +3,13 @@ package model.DAO;
 import model.Medicamentos;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 
 public class MedicamentosTXT {
-    private static final String directorio = "D:\\\\IdeaProjects\\\\Guia-10\\\\src\\\\resources\\\\";
+    private static final String directorio = "D:\\\\IdeaProjects\\\\Guia-13-EJ2\\\\src\\\\main\\\\java\\\\model\\\\DAO\\\\";
 
     public static ArrayList<Medicamentos> bajarMedicamentosTXT() {
 
@@ -42,5 +44,45 @@ public class MedicamentosTXT {
         }
 
         return medicamentos;
+    }
+
+    public static void grabarMedicamentosTXT(ArrayList<Medicamentos> medicamentos) {
+
+        try {
+            File fichero = new File(directorio + "Medicamentos.txt");
+
+            if (fichero.exists()) {
+                PrintWriter archivoSalida = new PrintWriter(fichero);
+
+                Medicamentos medicamento;
+                Iterator<Medicamentos> med = medicamentos.iterator();
+                while (med.hasNext()) {
+                    medicamento = med.next();
+
+                    archivoSalida.println(String.format("%010d", medicamento.getIdMed()) + medicamento.getNombreMed() + medicamento.getNombreLab());
+
+                }
+                archivoSalida.close();
+            }
+
+        } catch (IOException e) {
+            System.out.println("No se puede grabar el archivo de Medicamentos.txt");
+        }
+    }
+
+    public static void grabarMedicamentoTXT(Medicamentos medicamento) {
+
+        try {
+            FileWriter fichero = new FileWriter(directorio + "Medicamentos.txt", true);
+
+            PrintWriter archivoSalida = new PrintWriter(fichero);
+
+            archivoSalida.println(String.format("%010d", medicamento.getIdMed()) + medicamento.getNombreMed() + medicamento.getNombreLab());
+
+            archivoSalida.close();
+
+        } catch (IOException e) {
+            System.out.println("No se puede grabar el archivo de Medicamentos.txt");
+        }
     }
 }

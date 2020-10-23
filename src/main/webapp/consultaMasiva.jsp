@@ -11,7 +11,7 @@
     <title>Consulta Masiva</title>
 </head>
 <body>
-<form action="consultaMasiva" method="post">
+<form action="consultaMasivaSRV" method="post">
     <table>
         <tr>
             <td>Provincia:</td>

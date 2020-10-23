@@ -13,8 +13,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Calendar;
 
-@WebServlet(urlPatterns="/consultaPersonas", name = "consultaPersonas")
-public class consultaPersonas extends HttpServlet {
+@WebServlet("/consultaPersonasSRV")
+public class consultaPersonasSRV extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         int dni = Integer.parseInt(request.getParameter("dni"));
@@ -22,7 +22,7 @@ public class consultaPersonas extends HttpServlet {
 
         response.setContentType("text/html");
         out.print("<html><body>");
-        out.print("<h2>Documento: " + dni +"</h2>");
+        out.print("<h2>Documento: " + dni + "</h2>");
 
         if (dni != 0) {
             Controlador ctrl = new Controlador(dni);
@@ -33,7 +33,7 @@ public class consultaPersonas extends HttpServlet {
                 out.print("Nombre: " + persona.getNombre() + "<br>");
                 out.print("Apellido: " + persona.getApellido() + "<br>");
                 out.print("Fecha nacimiento:" + persona.getFechaNac().get(Calendar.DAY_OF_MONTH) + "/" +
-                        (persona.getFechaNac().get(Calendar.MONTH)+1) + "/" +
+                        (persona.getFechaNac().get(Calendar.MONTH) + 1) + "/" +
                         persona.getFechaNac().get(Calendar.YEAR) + "<br>");
                 out.print("Sexo: " + persona.getSexo() + "<br>");
                 out.print("Tipo de Sangre: " + persona.getTipoSangre().getGrupo() + persona.getTipoSangre().getFactor() + "<br>");

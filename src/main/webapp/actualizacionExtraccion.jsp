@@ -39,7 +39,7 @@
 <h3>Consulta y Edicion de Extracciones</h3>
 <br>
 <br>
-<form name="Consulta" action="consultaExtracciones" method="POST" onsubmit="document.Consulta.submit()" >
+<form name="Consulta" action="consultaExtraccionesSRV" method="POST" onsubmit="document.Consulta.submit()" >
     <table>
         <tr>
             <td>DNI: </td>
@@ -88,7 +88,7 @@
      nroExt = Integer.parseInt((String) session.getAttribute("NroExt"));}
 %>
 <br><br>
-<form name="Modifica" action="modificarExtracciones" >
+<form name="Modifica" action="modificarExtraccionesSRV" >
     <table>
         <tr><td> Peso </td>
             <td><input type="text" name="txtPeso" id="txtIdPeso" disabled value="<%=peso%>"  /> </td>

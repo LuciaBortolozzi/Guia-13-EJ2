@@ -11,11 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(urlPatterns="/consultaMedicamentos", name = "consultaMedicamentos")
-public class consultaMedicamentos extends HttpServlet {
+@WebServlet("/consultaMedicamentosSRV")
+public class consultaMedicamentosSRV extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int idMed = Integer.parseInt(request.getParameter("txtIDMed"));
-      
+
         PrintWriter out = response.getWriter();
         response.setContentType("text/html");
         out.print("<html><body>");
@@ -24,15 +24,15 @@ public class consultaMedicamentos extends HttpServlet {
 
             Medicamentos medicamento = Controlador.consultaMedicamento(idMed);
 
-            if ( medicamento == null) {
+            if (medicamento == null) {
 
                 out.print("<h2>ID Medicamento inexistente: " + idMed + "</h2>");
 
             } else {
-                out.print("<h2>ID Medicamento: " + idMed +"</h2>");
+                out.print("<h2>ID Medicamento: " + idMed + "</h2>");
 
-                request.getSession().setAttribute("nombreMed", medicamento.getNombreMed() );
-                request.getSession().setAttribute("nombreLab", medicamento.getNombreLab() );
+                request.getSession().setAttribute("nombreMed", medicamento.getNombreMed());
+                request.getSession().setAttribute("nombreLab", medicamento.getNombreLab());
 
                 request.getRequestDispatcher("actualizacionMedicamento.jsp").forward(request, response);
             }

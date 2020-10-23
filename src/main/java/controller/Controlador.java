@@ -10,6 +10,7 @@ public class Controlador {
     private PersonasDB personasDB = new PersonasDB();
     private ExtraccionesDB extraccionesDB = new ExtraccionesDB();
     private EstadisticasDB estadisticasDB = new EstadisticasDB();
+    static ArrayList<Medicamentos> medicamentos = MedicamentosTXT.bajarMedicamentosTXT();
 
     public Controlador(int dni) {
         personasDB = new PersonasDB(dni);
@@ -50,60 +51,6 @@ public class Controlador {
         ExtraccionesDB.deleteExtraccion(dni, idExt);
     }
 
-    public static Medicamentos consultaMedicamento(int idMed) {
-        return MedicamentosDB.selectMedicamento(idMed);
-    }
-
-    public static ArrayList<String> seleccionarMedicamentos() {
-        return MedicamentosDB.selectMedicamentosST();
-    }
-
-    public static void ingresoMedicamento(Medicamentos medicamento) {
-        MedicamentosDB.insertMedicamento(medicamento);
-    }
-
-
-    public static void borrarMedicamento(int idMed) {
-        MedicamentosDB.deleteMedicamento(idMed);
-    }
-
-    public static ArrayList<Medicamentos> leerMedicamentos(String origen) {
-        ArrayList<Medicamentos> medicamentos = new ArrayList<Medicamentos>();
-
-        if (origen == null)
-            origen = "TXT";
-
-        if (origen.equals("TXT")) {
-            for (Medicamentos medTXT : MedicamentosTXT.bajarMedicamentosTXT()) {
-                medicamentos.add(new Medicamentos(medTXT.getIdMed(), medTXT.getNombreMed(), medTXT.getNombreLab()));
-            }
-        } else {
-            for (Medicamentos medDB : MedicamentosDB.selectMedicamentos()) {
-                medicamentos.add(new Medicamentos(medDB.getIdMed(), medDB.getNombreMed(), medDB.getNombreLab()));
-            }
-        }
-        return medicamentos;
-    }
-
-    public static void actualizarMedicamento(int idMed, String nombreMed, String nombreLab, String origen) {
-/*        actualizarListMedicamento(medicamento.getIdMed(), 'M');
-        MedicamentosDB.modificar(medicamento);
-        MedicamentosTXT.modificar(medicamentos);*/
-    }
-
-    public static void actualizarListMedicamento(int idMed, char action) {
-       /* for (Medicamentos med : medicamentos) {
-            if (med.getIdMed() == idMed) {
-                if (action == 'B') {
-                    medicamentos.remove(med);
-                } else {
-                    med.setNombreMed(medicamento.getNombreMed());
-                    med.setNombreLab(medicamento.getNombreLab());
-                }
-                break;
-            }*/
-    }
-
     public void updateExtracciones(int dni, int idExt, double peso, double cantExtraida, String presion, double recuentoGlobRojos) {
         ExtraccionesDB.updateExtracciones(dni, idExt, peso, cantExtraida, presion, recuentoGlobRojos);
     }
@@ -122,5 +69,41 @@ public class Controlador {
 
     public TreeSet<Personas> selectEstadisticaUno() {
         return EstadisticasDB.selectEstadisticaUno();
+    }
+
+    public static Medicamentos consultaMedicamento(int idMed) {
+        Medicamentos medicamento = null;
+        for (Medicamentos med : medicamentos) {
+            if (med.getIdMed() == idMed)
+                medicamento = med;
+        }
+        return medicamento;
+    }
+
+    public static ArrayList<String> seleccionarMedicamentos() {
+        ArrayList<String> medicamentosST = new ArrayList<String>();
+        for (Medicamentos med : medicamentos)
+            medicamentosST.add(String.valueOf(med.getIdMed()));
+        return medicamentosST;
+    }
+
+    public static void ingresoMedicamento(Medicamentos medicamento) {
+        MedicamentosTXT.grabarMedicamentoTXT(medicamento);
+    }
+
+
+    public static void borrarMedicamento(int idMed) {
+
+        Medicamentos medicamento;
+        Iterator<Medicamentos> med = medicamentos.iterator();
+        while (med.hasNext()) {
+            medicamento = med.next();
+
+            if (medicamento.getIdMed() == idMed) {
+                medicamentos.remove(medicamento);
+                break;
+            }
+        }
+        MedicamentosTXT.grabarMedicamentosTXT(medicamentos);
     }
 }
