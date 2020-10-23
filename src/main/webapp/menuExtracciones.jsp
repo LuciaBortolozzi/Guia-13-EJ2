@@ -11,10 +11,10 @@
     <title>Extracciones</title>
 </head>
 <body>
-<h1>Extracciones</h1>
+<h1>ABM de Extracciones</h1>
 <ul>
-    <li><a href="altaExtraccion.jsp">Alta Extracción</a></li>
-    <li><a href="actualizacionExtraccion.jsp">Modificar Extracción</a></li>
+    <li><a href="altaExtraccion.jsp">Alta de Extracción</a></li>
+    <li><a href="actualizacionExtraccion.jsp">Modificacion o baja de Extracción</a></li>
 </ul>
 </body>
 </html>

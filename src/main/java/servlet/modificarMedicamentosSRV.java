@@ -1,6 +1,7 @@
 package servlet;
 
 import controller.Controlador;
+import model.Medicamentos;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,14 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "modificarMedicamentos")
-public class modificarMedicamentos extends HttpServlet {
+@WebServlet("/modificarMedicamentosSRV")
+public class modificarMedicamentosSRV extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
+
         int idMed = Integer.parseInt(request.getParameter("idMed"));
 
         if (idMed == 0) {
@@ -26,12 +27,11 @@ public class modificarMedicamentos extends HttpServlet {
 
         boolean borrar = request.getParameterMap().containsKey("btnBorrar");
 
-        String origen = "TXT";
 
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
         out.print("<html>");
-        out.print("<head><title>  </title></head>");
+        out.print("<head><title>Servlets de actualización</title></head>");
         out.print("<body>");
 
         if (borrar) {
@@ -43,23 +43,25 @@ public class modificarMedicamentos extends HttpServlet {
             out.print("<h2>Datos Ingresados a Modificar</h2>");
             if (idMed != 0) {
 
-                String nombreMed = request.getParameter("txtMarca");
-                String nombreLab = request.getParameter("txtModelo");
+                String nombreMed = request.getParameter("nombreMed");
+                String nombreLab = request.getParameter("nombreLab");
 
                 out.print("ID Medicamento: " + idMed + "<br>");
-                out.print("Modelo: " + nombreLab + "<br>");
-                out.print("Marca: " + nombreMed + "<br>");
-                
-                Controlador.actualizarMedicamento(idMed, nombreMed, nombreLab, origen);
+                out.print("Nombre Medicamento: " + nombreMed + "<br>");
+                out.print("Nombre Laboratorio: " + nombreLab + "<br>");
+
+                Medicamentos medicamento = new Medicamentos(idMed, nombreMed, nombreLab);
+                Controlador.ingresoMedicamento(medicamento);
             } else {
                 out.print("ID Medicamento en null ");
             }
         }
         out.print("<h3><a href=\"index.jsp\">Volver</a></h3>");
         out.println("</html></body>");
-        request.getSession().setAttribute("Patente", "");
-        request.getSession().setAttribute("Marca", "");
-        request.getSession().setAttribute("Modelo", "");
+
+        request.getSession().setAttribute("idMed", "");
+        request.getSession().setAttribute("nombreMed", "");
+        request.getSession().setAttribute("nombreLab", "");
     }
 
 }

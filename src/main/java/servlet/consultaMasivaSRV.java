@@ -15,8 +15,8 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.TreeSet;
 
-@WebServlet(urlPatterns="/consultaMasiva", name = "consultaMasiva")
-public class consultaMasiva extends HttpServlet {
+@WebServlet("/consultaMasivaSRV")
+public class consultaMasivaSRV extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -28,11 +28,11 @@ public class consultaMasiva extends HttpServlet {
         response.setContentType("text/html");
         out.print("<html><body>");
 
-        if(nombreProv !=""){
-            out.print("<h2>Provincia: " + nombreProv +"</h2>");
+        if (nombreProv != "") {
+            out.print("<h2>Provincia: " + nombreProv + "</h2>");
         }
-        if(tipoSangre !=""){
-            out.print("<h2>Tipo de sangre: " + tipoSangre +"</h2>");
+        if (tipoSangre != "") {
+            out.print("<h2>Tipo de sangre: " + tipoSangre + "</h2>");
         }
 
 

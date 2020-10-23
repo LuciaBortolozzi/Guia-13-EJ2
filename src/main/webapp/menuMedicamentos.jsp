@@ -8,13 +8,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Medicamentos</title>
 </head>
 <body>
 <h1>ABM de Medicamentos</h1>
 <ul>
-    <li><a href="altaMedicamento.jsp">Alta de Medicamentos</a></li>
-    <li><a href="actualizacionMedicamento.jsp">Modificacion y baja de Medicamentos</a></li>
+    <li><a href="altaMedicamento.jsp">Alta de Medicamento</a></li>
+    <li><a href="actualizacionMedicamento.jsp">Modificacion o baja de Medicamento</a></li>
 </ul>
 </body>
 </html>

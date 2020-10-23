@@ -18,7 +18,7 @@
     </script>
 </head>
 <body>
-<form action="ingresoExtracciones" onsubmit="validar()" method="post">
+<form action="ingresoExtraccionesSRV" onsubmit="validar()" method="post">
     <table>
         <tr>
             <td>DNI donador:</td>

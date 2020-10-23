@@ -20,7 +20,7 @@
 </head>
 <body>
 <h1>Consultar estadisticas</h1>
-<form action="estadisticas" method="post">
+<form action="estadisticasSRV" method="post">
     <tr>
         <td>Ingrese un peso:</td>
         <td>
