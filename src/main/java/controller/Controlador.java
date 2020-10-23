@@ -5,8 +5,6 @@ import model.DAO.*;
 
 import java.util.*;
 
-import static controller.Controlador.personas;
-
 public class Controlador {
 
     private PersonasDB personasDB = new PersonasDB();
@@ -109,57 +107,7 @@ public class Controlador {
         MedicamentosTXT.grabarMedicamentosTXT(medicamentos);
     }
 
-    public static void estadisticas(){
-        TreeSet<Personas> personas = PersonasDB.selectPersonas();
-        TreeSet<Personas> personasAux = new TreeSet<Personas>();
-        TreeSet<Personas> personasAux2 = new TreeSet<Personas>();
-        double cantidad = 0;
-        double totalPeso;
-
-        Calendar seisMesesAntes = Calendar.getInstance();
-        seisMesesAntes.add(Calendar.MONTH, -6);
-
-
-        String provincia = "CABA";
-
-        for (Personas p : personas) {
-
-            if (p.getLocalidad().getProvincia().getNombreProv().equals(provincia)) {
-
-                personasAux2.add(p);
-            }
-        }
-
-        boolean hayEnCaba = personas.stream().filter(p -> p.getLocalidad().getProvincia().getNombreProv().equals("CABA"))
-                .map(p -> p.getLocalidad().getProvincia().getNombreProv())
-                .forEach(p -> personasAux.add(p));
-
-        for (Personas p : personas) {
-
-            if (p instanceof Donadores) {
-                if (((Donadores) p).isDonaPlaquetas() && ((Donadores) p).isDonaSangre() && ((Donadores) p).isDonaPlasma()) {
-
-                    for (int i = 0; i < ((Donadores) p).getExtracciones().size(); i++) {
-
-                        if (((Donadores) p).getExtracciones().get(i).getFechaDonacion().after(seisMesesAntes)) {
-
-                            cantidad = cantidad + ((Donadores) p).getExtracciones().get(i).getCantExtraida();
-                        }
-                    }
-                }
-            }
-        }
-
-        for (Personas p : personas) {
-
-            if (p instanceof Donadores) {
-                for (int i = 0; i < ((Donadores) p).getExtracciones().size(); i++) {
-                    if (((Donadores) p).getExtracciones().get(i).getPesoDonador() != totalPeso) {
-
-                        personasAux.add(p);
-                    }
-                }
-            }
-        }
+    public TreeSet<Personas> selectTodasPersonas() {
+        return PersonasDB.selectTodasPersonas();
     }
 }

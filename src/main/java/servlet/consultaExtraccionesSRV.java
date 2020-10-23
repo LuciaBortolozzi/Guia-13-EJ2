@@ -51,11 +51,12 @@ public class consultaExtraccionesSRV extends HttpServlet {
 
             } else {
 
+                out.print("DNI: " + ((Donadores) persona).getDni() + "<br>");
+                out.print("ID EXTRACCION: " + ((Donadores) persona).getExtracciones().get(0).getNroExtraccion() + "<br>");
+
                 String fechaDonacion = ((Donadores) persona).getExtracciones().get(0).getFechaDonacion().get(Calendar.DAY_OF_MONTH) + "/" +
                         (((Donadores) persona).getExtracciones().get(0).getFechaDonacion().get(Calendar.MONTH) + 1) + "/" +
                         ((Donadores) persona).getExtracciones().get(0).getFechaDonacion().get(Calendar.YEAR);
-                request.getSession().setAttribute("Dni", ((Donadores) persona).getDni());
-                request.getSession().setAttribute("NroExt", ((Donadores) persona).getExtracciones().get(0).getNroExtraccion());
                 request.getSession().setAttribute("Peso", ((Donadores) persona).getExtracciones().get(0).getPesoDonador());
                 request.getSession().setAttribute("CantidadExtraida", ((Donadores) persona).getExtracciones().get(0).getCantExtraida());
                 request.getSession().setAttribute("Presion", ((Donadores) persona).getExtracciones().get(0).getPresion());

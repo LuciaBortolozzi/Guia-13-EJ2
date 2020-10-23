@@ -62,6 +62,35 @@ public class PersonasDB {
         return persona;
     }
 
+    public static TreeSet<Personas> selectTodasPersonas(){
+        TreeSet<Personas> personas = new TreeSet<Personas>();
+
+        try {
+            Connection conn = Conexion.getConnection();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT dni, nombre, apellido, sexo, fechaNac, provincia, localidad, tipoSangre, tipoPersona FROM Personas");
+            while (rs.next()) {
+                TiposSangre tipoSangre = TiposSangreDB.buscarTipoSangre(rs.getInt("tipoSangre"));
+                Localidades localidad = buscarLocalidad(rs.getInt("localidad"), rs.getInt("provincia"));
+
+                Calendar fechaNac = Calendar.getInstance();
+                fechaNac.setTime(rs.getDate("fechaNac"));
+
+                if (rs.getInt("tipoPersona") == 0) {
+                    personas.add( new Pacientes(rs.getString("nombre"), rs.getString("apellido"), rs.getInt("dni"),
+                            localidad, fechaNac, rs.getString("sexo").charAt(0), tipoSangre));
+                } else {
+                    personas.add( new Donadores(rs.getString("nombre"), rs.getString("apellido"), rs.getInt("dni"),
+                            localidad, fechaNac, rs.getString("sexo").charAt(0), tipoSangre));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return personas;
+    }
+
     public static TreeSet<Personas> selectPersonasPorProvTipoSangre(String provincia, String tiposSangre) {
 
         TreeSet<Personas> personas = new TreeSet<Personas>();

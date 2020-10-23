@@ -21,13 +21,7 @@
 <body>
 <h1>Consultar estadisticas</h1>
 <form action="estadisticasSRV" method="post">
-    <tr>
-        <td>Ingrese un peso:</td>
-        <td>
-            <input type="text" id= "idPeso" name="peso" />
-        </td>
-    </tr>
-    <input type="submit" value="Consultar"/>
+    <input type="submit" value="Consultar Estadística"/>
 </form>
 </body>
 </html>

@@ -8,7 +8,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <title>Edicion de Extracciones</title>
 </head>
 <script>
@@ -34,73 +33,48 @@
 </script>
 
 <body >
-<%@page import="controller.*" %>
-<%@ page import="java.util.ArrayList" %>
 <h3>Consulta y Edicion de Extracciones</h3>
 <br>
 <br>
-<form name="Consulta" action="consultaExtraccionesSRV" method="POST" onsubmit="document.Consulta.submit()" >
+
+<form action="consultaExtraccionesSRV" method="post">
     <table>
         <tr>
-            <td>DNI: </td>
-            <td><input type="text" name="txtDNIDonador" id="dniDonador"
-                       value="<%= request.getSession().getAttribute("dniDonador")!= null?request.getSession().getAttribute("dniDonador"):"" %>" /> </td>
-
-            <td><SELECT name="cmbDonadores" id="dniDonadores" onchange="setearDniDonadores()">
-                <OPTION>         </OPTION>
-                <%
-                        Controlador ctrl = new Controlador();
-                        ArrayList<String> donadoresStr = ctrl.seleccionarDonadores();
-                        for(String s: donadoresStr)
-                        {
-                            out.print("<OPTION>" + s + "</OPTION>");
-                        }
-
-                %>
-            </SELECT>
+            <td>Dni:</td>
+            <td>
+                <input type="text" name="txtDNIDonador" />
+            </td>
         </tr>
         <tr>
-            <td>ID EXTRACCION:</td>
+            <td>ID Extraccion:</td>
             <td>
                 <input type="text" name="txtidExtraccion" />
             </td>
         </tr>
-        <tr>
-            <td align="center"><input type="submit" name="btnBuscar" value="Buscar"/> </td>
-            <td><input type="reset" name="btnCancela" value="Cancela" /> </td>
-        </tr>
     </table>
+    <input type="submit" value="Buscar" />
 </form>
 
 <%
-    double peso = 0;
-    double cantidadExtraida = 0;
-    String presion = null;
-    double recuentoGlobulosRojos = 0;
-    int dni = 0;
-    int nroExt = 0;
-    if (session.getAttribute("Presion")!=null){
-     peso = Double.parseDouble((String) session.getAttribute("Peso"));
-     cantidadExtraida = Double.parseDouble((String) session.getAttribute("CantidadExtraida"));
-     presion = (String) session.getAttribute("Presion");
-     recuentoGlobulosRojos = Double.parseDouble((String) session.getAttribute("RecuentoGlobulosRojos"));
-     dni = Integer.parseInt((String) session.getAttribute("Dni"));
-     nroExt = Integer.parseInt((String) session.getAttribute("NroExt"));}
+    String peso = (String) session.getAttribute("Peso");
+    String cantidadExtraida = (String) session.getAttribute("CantidadExtraida");
+    String presion = (String) session.getAttribute("Presion");
+    String recuentoGlobulosRojos = (String) session.getAttribute("RecuentoGlobulosRojos");
 %>
 <br><br>
 <form name="Modifica" action="modificarExtraccionesSRV" >
     <table>
         <tr><td> Peso </td>
-            <td><input type="text" name="txtPeso" id="txtIdPeso" disabled value="<%=peso%>"  /> </td>
+            <td><input type="text" name="txtPeso" id="txtIdPeso" disabled value="<%=peso == null ? "" : peso%>"  /> </td>
         </tr>
         <tr><td> Cantidad Extraida </td>
-            <td><input type="text" name="txtCantidadExtraida" id="txtIdCantidadExtraida" disabled value="<%=cantidadExtraida%>"  /> </td>
+            <td><input type="text" name="txtCantidadExtraida" id="txtIdCantidadExtraida" disabled value="<%=cantidadExtraida == null ? "" : cantidadExtraida%>"  /> </td>
         </tr>
         <tr><td> Presion </td>
-            <td><input type="text" name="txtPresion" id="txtIdPresion" disabled value="<%=presion%>"  /> </td>
+            <td><input type="text" name="txtPresion" id="txtIdPresion" disabled value="<%=presion == null ? "" : presion%>"  /> </td>
         </tr>
         <tr><td> Recuento Globulos Rojos </td>
-            <td><input type="text" name="txtrecuentoGlobulosRojos" id="txtIdrecuentoGlobulosRojos" disabled value="<%=recuentoGlobulosRojos%>"  /> </td>
+            <td><input type="text" name="txtrecuentoGlobulosRojos" id="txtIdrecuentoGlobulosRojos" disabled value="<%=recuentoGlobulosRojos == null ? "" : recuentoGlobulosRojos%>"  /> </td>
         </tr>
 
         <tr>

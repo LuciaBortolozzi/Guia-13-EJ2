@@ -26,14 +26,13 @@ public class estadisticasSRV extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        double peso = Double.parseDouble(request.getParameter("peso"));
         PrintWriter out = response.getWriter();
 
         response.setContentType("text/html");
         out.print("<html><body>");
 
         Controlador ctrl = new Controlador();
-        TreeSet<Personas> listaPersonas = ctrl.selectEstadisticaUno();
+        TreeSet<Personas> listaPersonas = ctrl.selectTodasPersonas();
 
         out.print("<h2> EN CABA </h2>");
         out.print("<table border=\"1\" cellpadding=\"2\"> <tr> <td> DNI </td>");
@@ -41,16 +40,14 @@ public class estadisticasSRV extends HttpServlet {
         out.print("<td> Apellido </td>");
         out.print("<td> Sexo </td> </tr>");
 
-        Personas persona;
-        Iterator<Personas> iteratorPersonas = listaPersonas.iterator();
-        while (iteratorPersonas.hasNext()) {
-            persona = iteratorPersonas.next();
-
-            out.print("<tr> <td>" + persona.getDni() + "</td>");
-            out.print("<td>" + persona.getNombre() + "</td>");
-            out.print("<td>" + persona.getApellido() + "</td>");
-            out.print("<td>" + persona.getSexo() + "</td> </tr>");
-        }
+        listaPersonas.stream()
+                .forEach( (p)  ->
+                {
+                    out.print("<tr> <td>" + p.getDni() + "</td>");
+                    out.print("<td>" + p.getNombre() + "</td>");
+                    out.print("<td>" + p.getApellido() + "</td>");
+                    out.print("<td>" + p.getSexo() + "</td> </tr>");
+                });
         out.print("</table>");
 
 

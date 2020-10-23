@@ -51,18 +51,18 @@ public class ExtraccionesDB {
             Connection conn = Conexion.getConnection();
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT e.nroExtraccion, e.fechaDonacion, e.pesoDonador, e.pudoDonar, e.presion, " +
-                    "e.recuentoGlobulosRojos, e.cantExtraida, p.dni, p.nombre, p.apellido, p.sexo. p.fechaNac, p.provincia," +
+                    "e.recuentoGlobulosRojos, e.cantExtraida, p.dni, p.nombre, p.apellido, p.sexo, p.fechaNac, p.provincia," +
                     "p.localidad, p.tipoSangre, p.tipoPersona FROM Extracciones e INNER JOIN Personas p ON " +
-                    "e.dniDonador = p.dni WHERE dniDonador=" + dni + " AND nroExtraccion =" + idExt);
+                    "e.dniDonador = p.dni WHERE e.dniDonador=" + dni + " AND e.nroExtraccion =" + idExt);
 
 
             while (rs.next()) {
 
-                TiposSangre tipoSangre = TiposSangreDB.buscarTipoSangre(rs.getInt("p.tipoSangre"));
-                Localidades localidad = buscarLocalidad(rs.getInt("p.localidad"), rs.getInt("p.provincia"));
+                TiposSangre tipoSangre = TiposSangreDB.buscarTipoSangre(rs.getInt("tipoSangre"));
+                Localidades localidad = buscarLocalidad(rs.getInt("localidad"), rs.getInt("provincia"));
 
                 Calendar fechaNac = Calendar.getInstance();
-                fechaNac.setTime(rs.getDate("p.fechaNac"));
+                fechaNac.setTime(rs.getDate("fechaNac"));
 
 
                 persona = new Donadores(rs.getString("nombre"), rs.getString("apellido"), rs.getInt("dni"),
@@ -70,7 +70,7 @@ public class ExtraccionesDB {
 
 
                 Calendar fechaDon = Calendar.getInstance();
-                fechaDon.setTime(rs.getDate("e.fechaDonacion"));
+                fechaDon.setTime(rs.getDate("fechaDonacion"));
 
                 boolean pudoDonar = false;
                 if(rs.getInt("pudoDonar") ==1){
