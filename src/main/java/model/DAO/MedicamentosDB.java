@@ -28,6 +28,29 @@ public class MedicamentosDB {
         return medicamento;
     }
 
+    public static ArrayList<String> selectMedicamentosST() {
+        ArrayList<String> medicamentosST = new ArrayList<String>();
+
+        try {
+            Connection conn = Conexion.getConnection();
+            Statement stmt = conn.createStatement();
+
+            ResultSet rs = stmt.executeQuery("SELECT idMed FROM Medicamentos");
+            while (rs.next()) {
+                for (String med : medicamentosST)
+                {
+                    med = (String.valueOf(rs.getInt("idMed")));
+                    medicamentosST.add(med);
+                }
+            }
+            conn.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return medicamentosST;
+    }
+
     public static ArrayList<Medicamentos> selectMedicamentos() {
         ArrayList<Medicamentos> medicamentos = new ArrayList<>();
 
@@ -57,6 +80,20 @@ public class MedicamentosDB {
             stmt.setString(2, medicamento.getNombreMed());
             stmt.setString(3, medicamento.getNombreLab());
             stmt.execute();
+            conn.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void deleteMedicamento(int idMed) {
+
+        try {
+            Connection conn = Conexion.getConnection();
+            Statement stmt = conn.createStatement();
+
+            stmt.executeUpdate("DELETE FROM Medicamentos WHERE idMed=" + idMed + "");
             conn.close();
 
         } catch (SQLException e) {
