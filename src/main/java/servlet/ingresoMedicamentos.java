@@ -1,5 +1,6 @@
 package servlet;
 
+import controller.Controlador;
 import model.DAO.MedicamentosDB;
 import model.Medicamentos;
 
@@ -15,20 +16,16 @@ import java.io.PrintWriter;
 @WebServlet(urlPatterns="/ingresoMedicamentos", name = "ingresoMedicamentos")
 public class ingresoMedicamentos extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int idMed = Integer.parseInt(request.getParameter("idMed"));
         String nombreMed = request.getParameter("nombreMed");
         String nombreLab = request.getParameter("nombreLab");
 
-        Medicamentos med = MedicamentosDB.selectMedicamento(idMed);
+        Medicamentos med = Controlador.consultaMedicamento(idMed);
         if (med == null){
             Medicamentos medicamento = new Medicamentos(idMed, nombreMed, nombreLab);
-            MedicamentosDB.insertMedicamento(medicamento);
+            Controlador.ingresoMedicamento(medicamento);
 
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/contactoIndex.jsp");
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/menuMedicamentos.jsp");
             dispatcher.forward(request, response);
         } else {
             PrintWriter out = response.getWriter();
@@ -36,7 +33,13 @@ public class ingresoMedicamentos extends HttpServlet {
             response.setContentType("text/html");
             out.print("<html><body>");
             out.print("<h2>Documento: " + idMed + " ya existe" +"</h2>");
+            out.print("<br><br>");
+            out.print("<h3><a href=\"menuMedicamentos.jsp\">Volver</a></h3>");
             out.print("</body></html>");
         }
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
     }
 }
