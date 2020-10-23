@@ -101,8 +101,8 @@ public class Controlador {
                     med.setNombreLab(medicamento.getNombreLab());
                 }
                 break;
-            }
-        }*/
+            }*/
+    }
 
     public void updateExtracciones(int dni, int idExt, double peso, double cantExtraida, String presion, double recuentoGlobRojos) {
         ExtraccionesDB.updateExtracciones(dni, idExt, peso, cantExtraida, presion, recuentoGlobRojos);
