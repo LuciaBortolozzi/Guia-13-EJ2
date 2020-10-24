@@ -14,10 +14,10 @@ import java.io.PrintWriter;
 @WebServlet("/modificarMedicamentosSRV")
 public class modificarMedicamentosSRV extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int idMed = Integer.parseInt(request.getParameter("idMed"));
+        String idMed = request.getParameter("idMed");
 
-        if (idMed == 0) {
-            idMed = Integer.parseInt(request.getSession().getAttribute("idMed").toString());
+        if (idMed == null) {
+            idMed = request.getSession().getAttribute("idMed").toString();
         }
 
         boolean borrar = request.getParameterMap().containsKey("btnBorrar");
@@ -32,11 +32,11 @@ public class modificarMedicamentosSRV extends HttpServlet {
         if (borrar) {
             out.print("<h2>Datos Ingresados a Borrar</h2>");
             out.print("ID Medicamento: " + idMed);
-            Controlador.borrarMedicamento(idMed);
+            Controlador.borrarMedicamento(Integer.parseInt(idMed));
 
         } else {
             out.print("<h2>Datos Ingresados a Modificar</h2>");
-            if (idMed != 0) {
+            if (idMed != null) {
 
                 String nombreMed = request.getParameter("nombreMed");
                 String nombreLab = request.getParameter("nombreLab");
@@ -45,7 +45,7 @@ public class modificarMedicamentosSRV extends HttpServlet {
                 out.print("Nombre Medicamento: " + nombreMed + "<br>");
                 out.print("Nombre Laboratorio: " + nombreLab + "<br>");
 
-                Medicamentos medicamento = new Medicamentos(idMed, nombreMed, nombreLab);
+                Medicamentos medicamento = new Medicamentos(Integer.parseInt(idMed), nombreMed, nombreLab);
                 Controlador.ingresoMedicamento(medicamento);
             } else {
                 out.print("ID Medicamento en null ");
