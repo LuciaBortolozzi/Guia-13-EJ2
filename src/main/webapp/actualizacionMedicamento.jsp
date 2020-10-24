@@ -27,10 +27,10 @@
 
     function limpiar()
     {
-        document.getElementById("IdMed").value="";
+        document.getElementById("idMed").value="";
         document.getElementById("nombreMed").value="";
         document.getElementById("nombreLab").value="";
-        session.setAttribute("IdMed", "");
+        session.setAttribute("idMed", "");
         session.setAttribute("nombreMed", "");
         session.setAttribute("nombreLab", "");
     }
