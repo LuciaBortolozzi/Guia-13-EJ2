@@ -25,6 +25,7 @@
         document.getElementById("txtIdPresion").disabled=false;
         document.getElementById("txtIdFechaDonacion").disabled=false;
         document.getElementById("txtIdrecuentoGlobulosRojos").disabled=false;
+        document.getElementById("btnIdConfirmaModificar").disabled=false;
     }
 
     function limpiar() {

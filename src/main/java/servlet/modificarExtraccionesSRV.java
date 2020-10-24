@@ -15,18 +15,18 @@ public class modificarExtraccionesSRV extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        double peso = Double.parseDouble(request.getParameter("txtPeso"));
-        double cantExtraida = Double.parseDouble(request.getParameter("txtCantidadExtraida"));
+        String peso = request.getParameter("txtPeso");
+        String cantExtraida = request.getParameter("txtCantidadExtraida");
         String presion = request.getParameter("txtPresion");
-        double recuentoGlobRojos = Double.parseDouble(request.getParameter("txtrecuentoGlobulosRojos"));
-        int dni = Integer.parseInt(request.getParameter("txtDNIDonador"));
-        int idExt = Integer.parseInt(request.getParameter("txtidExtraccion"));
+        String recuentoGlobRojos = request.getParameter("txtrecuentoGlobulosRojos");
+        String dni = request.getParameter("txtDNIDonador");
+        String idExt = request.getParameter("txtidExtraccion");
 
-        if (dni == 0) {
-            dni = Integer.parseInt(request.getSession().getAttribute("Dni").toString());
+        if (dni == null) {
+            dni = request.getSession().getAttribute("Dni").toString();
         }
-        if (idExt == 0) {
-            idExt = Integer.parseInt(request.getSession().getAttribute("NroExt").toString());
+        if (idExt == null) {
+            idExt = request.getSession().getAttribute("NroExt").toString();
         }
 
         boolean borrar = request.getParameterMap().containsKey("btnBorrar");
@@ -45,7 +45,7 @@ public class modificarExtraccionesSRV extends HttpServlet {
             ctrl.borrarExtraccion(dni, idExt);
         } else {
             out.print("<h2>Datos Ingresados a Modificar</h2>");
-            if (dni != 0 && idExt != 0) {
+            if (dni != null && idExt != null) {
                 String pesoAux = request.getParameter("txtPeso");
                 String cantExtraidaAux = request.getParameter("txtCantidadExtraida");
                 String presionAux = request.getParameter("txtPresion");
@@ -56,7 +56,7 @@ public class modificarExtraccionesSRV extends HttpServlet {
                 out.print("Persion: " + presion + "<br>");
                 out.print("Recuento globulos rojos: " + recuentoGlobRojos + "<br>");
 
-                Controlador ctrl = new Controlador(dni, idExt, peso, cantExtraida, presion, recuentoGlobRojos);
+                Controlador ctrl = new Controlador(dni, idExt);
                 ctrl.updateExtracciones(dni, idExt, peso, cantExtraida, presion, recuentoGlobRojos);
 
             } else {

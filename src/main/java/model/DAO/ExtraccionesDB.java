@@ -88,14 +88,19 @@ public class ExtraccionesDB {
         return persona;
     }
 
-    public static void updateExtracciones(int dni, int idExt, double peso, double cantExtraida, String presion, double recuentoGlobRojos) {
+    public static void updateExtracciones(String dni, String idExt, String peso, String cantExtraida, String presion, String recuentoGlobRojos) {
 
         try{
+            int dniAux = Integer.parseInt(dni);
+            int idExtAux = Integer.parseInt(idExt);
+            double pesoAux = Double.parseDouble(peso);
+            double cantExtraidaAux = Double.parseDouble(cantExtraida);
+            double recuentoGlobRojoAux = Double.parseDouble(recuentoGlobRojos);
 
             Connection conn = Conexion.getConnection();
             Statement stmt = conn.createStatement();
-            stmt.executeUpdate("UPDATE Extracciones SET pesoDonador=" + peso + ", cantExtraida=" + cantExtraida
-                    + ", presion='" + presion + "', ruentoGlobulosRojos=" + recuentoGlobRojos + " WHERE dniDonador=" + dni + " AND nroExtraccion = " + idExt);
+            stmt.executeUpdate("UPDATE Extracciones SET pesoDonador=" + pesoAux + ", cantExtraida=" + cantExtraidaAux
+                    + ", presion='" + presion + "', ruentoGlobulosRojos=" + recuentoGlobRojoAux + " WHERE dniDonador=" + dniAux + " AND nroExtraccion = " + idExtAux);
 
             conn.close();
 
@@ -104,13 +109,15 @@ public class ExtraccionesDB {
         }
     }
 
-    public static void deleteExtraccion(int dni, int idExt) {
+    public static void deleteExtraccion(String dni, String idExt) {
 
         try {
             Connection conn = Conexion.getConnection();
             Statement stmt = conn.createStatement();
+            int dniAux = Integer.parseInt(dni);
+            int idExtAux = Integer.parseInt(idExt);
 
-            stmt.executeUpdate("DELETE FROM Extracciones WHERE dniDonador=" + dni + " AND nroExtraccion=" + idExt);
+            stmt.executeUpdate("DELETE FROM Extracciones WHERE dniDonador=" + dniAux + " AND nroExtraccion=" + idExtAux);
             conn.close();
         } catch (SQLException e) {
             e.printStackTrace();

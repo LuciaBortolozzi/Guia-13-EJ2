@@ -47,11 +47,11 @@ public class Controlador {
         return ExtraccionesDB.selectExtraccion(dni, idExt);
     }
 
-    public void borrarExtraccion(int dni, int idExt) {
+    public void borrarExtraccion(String dni, String idExt) {
         ExtraccionesDB.deleteExtraccion(dni, idExt);
     }
 
-    public void updateExtracciones(int dni, int idExt, double peso, double cantExtraida, String presion, double recuentoGlobRojos) {
+    public void updateExtracciones(String dni, String idExt, String peso, String cantExtraida, String presion, String recuentoGlobRojos) {
         ExtraccionesDB.updateExtracciones(dni, idExt, peso, cantExtraida, presion, recuentoGlobRojos);
     }
 
