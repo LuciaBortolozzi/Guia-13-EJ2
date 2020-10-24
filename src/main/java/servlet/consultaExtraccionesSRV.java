@@ -57,11 +57,11 @@ public class consultaExtraccionesSRV extends HttpServlet {
                 String fechaDonacion = ((Donadores) persona).getExtracciones().get(0).getFechaDonacion().get(Calendar.DAY_OF_MONTH) + "/" +
                         (((Donadores) persona).getExtracciones().get(0).getFechaDonacion().get(Calendar.MONTH) + 1) + "/" +
                         ((Donadores) persona).getExtracciones().get(0).getFechaDonacion().get(Calendar.YEAR);
-                request.getSession().setAttribute("Peso", ((Donadores) persona).getExtracciones().get(0).getPesoDonador());
-                request.getSession().setAttribute("CantidadExtraida", ((Donadores) persona).getExtracciones().get(0).getCantExtraida());
+                request.getSession().setAttribute("Peso", String.valueOf(((Donadores) persona).getExtracciones().get(0).getPesoDonador()));
+                request.getSession().setAttribute("CantidadExtraida", String.valueOf(((Donadores) persona).getExtracciones().get(0).getCantExtraida()));
                 request.getSession().setAttribute("Presion", ((Donadores) persona).getExtracciones().get(0).getPresion());
-                request.getSession().setAttribute("FechaDonacion", fechaDonacion);
-                request.getSession().setAttribute("RecuentoGlobulosRojos", ((Donadores) persona).getExtracciones().get(0).getRecuentoGlobulosRojos());
+                request.getSession().setAttribute("FechaDonacion", String.valueOf(fechaDonacion));
+                request.getSession().setAttribute("RecuentoGlobulosRojos", String.valueOf(((Donadores) persona).getExtracciones().get(0).getRecuentoGlobulosRojos()));
 
                 request.getRequestDispatcher("actualizacionExtraccion.jsp").forward(request, response);
             }

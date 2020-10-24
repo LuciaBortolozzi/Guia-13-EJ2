@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <title>Edicion de Extracciones</title>
 </head>
 <script>
@@ -33,6 +34,8 @@
 </script>
 
 <body >
+<%@page import="controller.*" %>
+<%@ page import="java.util.ArrayList" %>
 <h3>Consulta y Edicion de Extracciones</h3>
 <br>
 <br>
@@ -56,10 +59,10 @@
 </form>
 
 <%
-    String peso = (String) session.getAttribute("Peso");
-    String cantidadExtraida = (String) session.getAttribute("CantidadExtraida");
-    String presion = (String) session.getAttribute("Presion");
-    String recuentoGlobulosRojos = (String) session.getAttribute("RecuentoGlobulosRojos");
+        String peso = (String) session.getAttribute("Peso");
+        String cantidadExtraida = (String) session.getAttribute("CantidadExtraida");
+        String presion = (String) session.getAttribute("Presion");
+        String recuentoGlobulosRojos = (String) session.getAttribute("RecuentoGlobulosRojos");
 %>
 <br><br>
 <form name="Modifica" action="modificarExtraccionesSRV" >
